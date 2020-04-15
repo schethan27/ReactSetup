@@ -1,0 +1,91 @@
+Redux:
+1. Install the redux dependencies 
+	npm install redux react-redux --save
+	
+2. Create store  
+	We can create the store in the index.js Its good practice to have the store file as seperate which will have flexiblity to modify 
+	
+	> create a new file in the src directory with name store.js
+	> Add the below snippet 
+		import {createStore } from 'redux'; //import 'createStore' function reference from redux library
+		//Initial Application state
+		const initialState = {
+			loginSuccess: false,
+			validUser: false
+		}
+		// Reducer function which is responsible to modify the application state based on the action payload (action is a javascript object with type and payload) 
+		const reducer = (state = initialState,action)=>{
+			switch(action.type){
+				case LOGIN: return {
+					...state,
+					loginSuccess: action.payload  
+				}
+			}
+		}
+		// Creating application store based by passing the reducer function
+		const store = createStore(reducer);
+		export default store;
+		
+3. After creating the store we need to wrap our application component with the redux provider which provides the access for the states
+	> Go to index.js file which the entry point for the application and make the below changes
+		
+		import store from './store';
+		import { Provider } from 'react-redux';
+		
+		then surround the <APP/> component with provider as below
+		Before Changing : ReactDom.render(<App/>,document.getElementById('container'));
+		After Changing :
+		ReactDom.render(
+		<Provider store={store}>
+			<App/>
+		</Provider>
+		,document.getElementById('container'));
+
+4. To access the state in the component we need to wrap our component with HOC (Higher Order Component) using connect function provided by react-redux 
+	import { connect } from 'react-redux'; // Import it in the component where we need to access the state
+	
+	
+	To access the state from the REDUX Store and map it to the props component we will create a function as below
+		const mapStateToProps = (state) =>{
+			return {
+				regions: state.dashboard.regions,
+				productLines: state.dashboard.productLines
+			}
+		}
+	In the above function we are  apping the state value to the component props (i.e state.dashboard.regions is mapped to the component props key 'regions')
+	
+		const mapDispatchToProps = (dispatch) =>{
+			return {
+				getRegions: (id)=>{dispatch({type:"",payLoad:""})}
+			}
+		}
+	To update the state in the Redux store we need to dipatch the action (i.e action is a javascript object {type:"",payload:{}). We will create another function
+		export default connect(mapStateToProps,mapDispatchToProps)(OURCOMPONENT)
+
+Advanced setup:
+Somtimes as the application grows its difficult to maintain the application state tree as a whole and will be good to have if we can have the state tree for the component we can have 
+multiple reducers. Create 'reducer' folder in src directory and create index.js file which shall have the configuration to combine all the reducers that will be created in this folder.
+Below is the configuration to combine the reducer
+	import { combineReducers } from 'redux';
+
+	import reducerdemo1 from './reducer1';
+	import reducerdemo2 from './reducer2';
+	import reducerdemo3 from './reducer3';
+
+	const rootReducer = combineReducers({
+		reducerdemo1: reducerdemo1,
+		reducerdemo1: reducerdemo1,
+		reducerdemo1: reducerdemo1		
+	}); 
+export default rootReducer;
+
+Then once the reducers are combined pass this rootReducer while creating the store in the store.js file which we had created earlier above step-2
+	const store = createStore(rootReducer);
+
+References:
+1.https://github.com/the-road-to-learn-react/react-redux-example
+2.https://github.com/gothinkster/react-redux-realworld-example-app
+3.https://www.youtube.com/watch?v=40pWMVMnftc&list=PL4cUxeGkcC9ij8CfkAY2RAGb-tmkNwQHG&index=42
+
+concept :
+1. Immutable
