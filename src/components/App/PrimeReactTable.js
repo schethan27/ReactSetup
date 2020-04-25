@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {DataTable} from 'primereact/datatable/';
 import {Column} from 'primereact/column';
-import * as PostsApiService from '../services/PostsApiService';
+import * as PostsApiService from '../../services/PostsApiService';
 
 
 export default class PrimeReactTable extends Component {
