@@ -1,0 +1,11 @@
+[
+    {
+        "id": "1",
+        "name": "dashboard",
+        "displayName":"Dashboard",
+        "subMenuItems":{},
+        "menuIconName":"",
+        "routeUrl":"/dashboard"
+    }
+    
+]
