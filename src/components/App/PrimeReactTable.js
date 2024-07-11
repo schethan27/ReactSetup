@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {DataTable} from 'primereact/datatable/';
+import {DataTable} from 'primereact/datatable'
 import {Column} from 'primereact/column';
 import * as PostsApiService from '../../services/PostsApiService';
 
