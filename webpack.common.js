@@ -11,13 +11,11 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
+                use: ['babel-loader']
             },
             {
                 test: /\.(scss|css)$/,
-                loader: 'style-loader!css-loader!sass-loader'
+                use: ['style-loader','css-loader', 'sass-loader' ]
             },
             {
                 test: /\.(png|jpe?g|gif|woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
